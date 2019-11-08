@@ -22,4 +22,6 @@ class RddPairedTransformationsSolution extends RddPairedTransformations {
     .flatMapValues(value => value._1 * 10 + 1 to  value._1 * 10 + value._2)
     .groupByKey().mapValues(iterable => iterable.mkString(" "))
 
+  override def reserveSeatsInOrder(seatsByTeam: RDD[(String, (Int, Int))]): RDD[(String, String)] =
+    reserveSeats(seatsByTeam).sortByKey()
 }

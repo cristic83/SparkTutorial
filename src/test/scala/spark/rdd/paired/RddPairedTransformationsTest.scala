@@ -73,5 +73,14 @@ class RddPairedTransformationsTest extends AbstractUnitTest {
       result("dinamo") should === ("31 32 33 34")
     }
 
+    it("reserveSeatsInOrder should return reserved seats per team") {
+      val seatsByTeam = sc.parallelize(List(
+        ("steaua", (1,3)), ("craiova", (2, 2)), ("dinamo", (3,4))))
+      val result = rddBasicTransformations.reserveSeatsInOrder(seatsByTeam)
+        .keys.collect()
+
+      result should contain inOrderOnly("craiova", "dinamo", "steaua")
+    }
+
   }
 }

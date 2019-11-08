@@ -4,6 +4,8 @@ import org.apache.spark.rdd.RDD
 import spark.rdd.paired.solution.RddPairedTransformationsSolution
 
 trait RddPairedTransformations {
+  def reserveSeatsInOrder(seatsByTeam: RDD[(String, (Int, Int))]): RDD[(String, String)]
+
   def reserveSeats(wordOccurrences: RDD[(String, (Int, Int))]): RDD[(String, String)]
 
   def computeAveragePerKey(wordOccurrences: RDD[(String, Int)]): RDD[(String, Double)]

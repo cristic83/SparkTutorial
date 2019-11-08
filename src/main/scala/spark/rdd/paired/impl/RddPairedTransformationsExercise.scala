@@ -13,4 +13,6 @@ class RddPairedTransformationsExercise extends RddPairedTransformations {
   override def computeAveragePerKey(wordOccurrences: RDD[(String, Int)]): RDD[(String, Double)] = ???
 
   override def reserveSeats(wordOccurrences: RDD[(String, (Int, Int))]): RDD[(String, String)] = ???
+
+  override def reserveSeatsInOrder(seatsByTeam: RDD[(String, (Int, Int))]): RDD[(String, String)] = ???
 }
