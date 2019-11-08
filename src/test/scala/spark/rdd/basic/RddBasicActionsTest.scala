@@ -1,9 +1,9 @@
 package spark.rdd.basic
 
 import org.apache.spark.rdd.RDD
-import spark.rdd.AbstractUnitTest
+import spark.rdd.AbstractIntegrationTest
 
-class RddBasicActionsTest extends AbstractUnitTest {
+class RddBasicActionsTest extends AbstractIntegrationTest {
   val rddBasicActions = RddBasicActions()
 
   describe("RDD Operations Tests") {
