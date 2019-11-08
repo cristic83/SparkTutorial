@@ -7,11 +7,11 @@ class RddBasicActionsSolution extends RddBasicActions {
 
   override def joinWordsToSentence(words: RDD[String]): String = words.reduce((first, second) => first + " " + second)
 
-  class StringSizeOrdering extends Ordering[String] {
+  private val ordering =  new Ordering[String] {
     override def compare(x: String, y: String): Int = x.size compareTo  y.size
   }
 
-  override def getFirstLinesComparedByLength(logLines: RDD[String]): Array[String] = logLines.top(2)(new StringSizeOrdering)
+  override def getFirstLinesComparedByLength(logLines: RDD[String]): Array[String] = logLines.top(2)(ordering)
 
   override def getFirstLines(logLines: RDD[String]): Array[String] = logLines.take(2)
 
