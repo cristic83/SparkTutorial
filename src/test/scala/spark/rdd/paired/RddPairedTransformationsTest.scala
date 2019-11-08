@@ -1,6 +1,6 @@
 package spark.rdd.paired
 
-import spark.AbstractUnitTest
+import spark.rdd.AbstractUnitTest
 
 class RddPairedTransformationsTest extends AbstractUnitTest {
   val rddBasicTransformations = RddPairedTransformations()
