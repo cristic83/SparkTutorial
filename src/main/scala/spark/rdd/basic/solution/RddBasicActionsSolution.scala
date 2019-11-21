@@ -5,6 +5,11 @@ import spark.rdd.basic.RddBasicActions
 
 class RddBasicActionsSolution extends RddBasicActions {
 
+  /**
+   * https://rxmarbles.com/#reduce
+   * @param words
+   * @return
+   */
   override def joinWordsToSentence(words: RDD[String]): String = words.reduce((first, second) => first + " " + second)
 
   private val ordering =  new Ordering[String] {
@@ -13,8 +18,18 @@ class RddBasicActionsSolution extends RddBasicActions {
 
   override def getFirstLinesComparedByLength(logLines: RDD[String]): Array[String] = logLines.top(2)(ordering)
 
+  /**
+   * https://rxmarbles.com/#take
+   * @param logLines
+   * @return
+   */
   override def getFirstLines(logLines: RDD[String]): Array[String] = logLines.take(2)
 
+  /**
+   * https://rxmarbles.com/#count
+   * @param logLines
+   * @return
+   */
   override def howManyLines(logLines: RDD[String]): Long = logLines.count()
 
   override def average(temperatures: RDD[Double]) : Double = {
