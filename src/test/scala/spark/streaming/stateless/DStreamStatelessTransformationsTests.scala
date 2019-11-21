@@ -14,13 +14,14 @@ class DStreamStatelessTransformationsTests extends AbstractIntegrationTest {
   private val dstreamTransformations = DStreamStatelessTransformations()
   describe("RDD Operations Tests") {
 
-    it("average should correctly compute the average of temperatures") {
+    it("toUppercase should uppercase all its input") {
       //given
-      val lines: mutable.Queue[RDD[String]] = mutable.Queue[RDD[String]]()
-      val dstream: InputDStream[String] = ssc.queueStream(lines)
+      val batches: mutable.Queue[RDD[String]] = mutable.Queue[RDD[String]]()
+      val dstream: InputDStream[String] = ssc.queueStream(batches)
 
       val outputDir = "target/testfiles"
 
+      //operation under test
       val toUpperDStream = dstreamTransformations.toUppercase(dstream)
 
       toUpperDStream.saveAsTextFiles(outputDir, "txt")
@@ -29,7 +30,7 @@ class DStreamStatelessTransformationsTests extends AbstractIntegrationTest {
 
       //when
 
-      lines += ssc.sparkContext.makeRDD(Seq("b", "c"))
+      batches += ssc.sparkContext.makeRDD(Seq("b", "c"))
 
       clock.advance(batchDuration.milliseconds)
 
@@ -39,7 +40,7 @@ class DStreamStatelessTransformationsTests extends AbstractIntegrationTest {
         val wFile: RDD[String] = ssc.sparkContext.textFile(fileName)
         wFile.count() should be (2)
         wFile.collect().foreach(println)
-        Try(Path(fileName + "-1000").deleteRecursively)
+        Try(Path(fileName).deleteRecursively)
       }
     }
   }
