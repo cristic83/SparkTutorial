@@ -181,6 +181,87 @@ class DStreamStateTransformationsTests extends AbstractIntegrationTest {
         })
       }
     }
+    it("computeSumOfKConsecutiveElements should compute the correct result") {
+      //given
+      val batches: mutable.Queue[RDD[Long]] = mutable.Queue[RDD[Long]]()
+      val dstream: InputDStream[Long] = ssc.queueStream(batches)
+
+      val outputDir = resultsDir + "/batch"
+
+      //operation under test
+      val sumPerKElements = dstreamTransformations.computeSumOfKConsecutiveElements(dstream, 4)
+
+      sumPerKElements.saveAsTextFiles(outputDir)
+
+      ssc.start()
+
+      //when
+      batches += ssc.sparkContext.makeRDD(Seq(1L))
+      clock.advance(batchDuration.milliseconds)
+      batches += ssc.sparkContext.makeRDD(Seq(4L))
+      clock.advance(batchDuration.milliseconds)
+      batches += ssc.sparkContext.makeRDD(Seq(2L))
+      clock.advance(batchDuration.milliseconds)
+      batches += ssc.sparkContext.makeRDD(Seq(10L))
+      clock.advance(batchDuration.milliseconds)
+      batches += ssc.sparkContext.makeRDD(Seq(23L))
+      clock.advance(batchDuration.milliseconds)
+      batches += ssc.sparkContext.makeRDD(Seq(3L))
+      clock.advance(batchDuration.milliseconds)
+      batches += ssc.sparkContext.makeRDD(Seq(1L))
+      clock.advance(batchDuration.milliseconds)
+      batches += ssc.sparkContext.makeRDD(Seq(0L))
+      clock.advance(batchDuration.milliseconds)
+      batches += ssc.sparkContext.makeRDD(Seq(20L))
+      clock.advance(batchDuration.milliseconds)
+
+      //then
+      eventually(timeout(Span(2, Seconds))){
+        checkResults(outputDir, "-1000", resultsRDD => {
+          resultsRDD.count() should be(1)
+          resultsRDD.collect() should contain ("1")
+        })
+
+        checkResults(outputDir, "-2000", resultsRDD => {
+          resultsRDD.count() should be(1)
+          resultsRDD.collect() should contain ("5")
+        })
+
+        checkResults(outputDir, "-3000", resultsRDD => {
+          resultsRDD.count() should be(1)
+          resultsRDD.collect() should contain ("7")
+        })
+        checkResults(outputDir, "-4000", resultsRDD => {
+          resultsRDD.count() should be(1)
+          resultsRDD.collect() should contain ("17")
+        })
+
+        checkResults(outputDir, "-5000", resultsRDD => {
+          resultsRDD.count() should be(1)
+          resultsRDD.collect() should contain ("39")
+        })
+
+        checkResults(outputDir, "-6000", resultsRDD => {
+          resultsRDD.count() should be(1)
+          resultsRDD.collect() should contain ("38")
+        })
+
+        checkResults(outputDir, "-7000", resultsRDD => {
+          resultsRDD.count() should be(1)
+          resultsRDD.collect() should contain ("37")
+        })
+
+        checkResults(outputDir, "-8000", resultsRDD => {
+          resultsRDD.count() should be(1)
+          resultsRDD.collect() should contain ("27")
+        })
+
+        checkResults(outputDir, "-9000", resultsRDD => {
+          resultsRDD.count() should be(1)
+          resultsRDD.collect() should contain ("24")
+        })
+      }
+    }
   }
 
 
