@@ -1,6 +1,7 @@
 package spark.rdd.paired
 
 import org.apache.spark.rdd.RDD
+import spark.rdd.paired.impl.RddPairedTransformationsExercise
 import spark.rdd.paired.solution.RddPairedTransformationsSolution
 
 trait RddPairedTransformations {
@@ -18,5 +19,5 @@ trait RddPairedTransformations {
 }
 
 object RddPairedTransformations {
-  def apply(): RddPairedTransformations = new RddPairedTransformationsSolution()
+  def apply(): RddPairedTransformations = new RddPairedTransformationsExercise()
 }

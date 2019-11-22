@@ -1,6 +1,7 @@
 package spark.rdd.basic
 
 import org.apache.spark.rdd.RDD
+import spark.rdd.basic.impl.RddBasicTransformationsExercise
 import spark.rdd.basic.solution.RddBasicTransformationsSolution
 
 trait RddBasicTransformations {
@@ -17,5 +18,5 @@ trait RddBasicTransformations {
 }
 
 object RddBasicTransformations {
-  def apply(): RddBasicTransformations = new RddBasicTransformationsSolution()
+  def apply(): RddBasicTransformations = new RddBasicTransformationsExercise()
 }

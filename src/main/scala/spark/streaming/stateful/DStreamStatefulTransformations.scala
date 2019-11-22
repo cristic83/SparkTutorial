@@ -1,6 +1,7 @@
 package spark.streaming.stateful
 
 import org.apache.spark.streaming.dstream.DStream
+import spark.streaming.stateful.impl.DStreamStatefulTransformationsExercise
 import spark.streaming.stateful.solution.DStreamStatefulTransformationsSolution
 
 trait DStreamStatefulTransformations {
@@ -10,7 +11,7 @@ trait DStreamStatefulTransformations {
 
 
 object DStreamStatefulTransformations {
-  def apply(): DStreamStatefulTransformations = new DStreamStatefulTransformationsSolution()
+  def apply(): DStreamStatefulTransformations = new DStreamStatefulTransformationsExercise()
 }
 
 

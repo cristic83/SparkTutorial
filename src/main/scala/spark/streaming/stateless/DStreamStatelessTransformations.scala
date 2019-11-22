@@ -1,6 +1,7 @@
 package spark.streaming.stateless
 
 import org.apache.spark.streaming.dstream.DStream
+import spark.streaming.stateless.impl.DStreamStatelessTransformationsExercise
 import spark.streaming.stateless.solution.DStreamStatelessTransformationsSolution
 
 trait DStreamStatelessTransformations {
@@ -8,5 +9,5 @@ trait DStreamStatelessTransformations {
 }
 
 object DStreamStatelessTransformations {
-  def apply(): DStreamStatelessTransformations = new DStreamStatelessTransformationsSolution()
+  def apply(): DStreamStatelessTransformations = new DStreamStatelessTransformationsExercise()
 }
